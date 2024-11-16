@@ -1,6 +1,10 @@
 import { Link, NavLink } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
+import UserDropdown from "./UserDropdown";
 
 const Navbar = () => {
+  const { user } = useAuth();
+
   return (
     <div className="navbar bg-base-200">
       <div className="navbar-start">
@@ -44,36 +48,46 @@ const Navbar = () => {
             </li>
           </ul>
         </div>
-        <Link to='/'>
+        <Link to="/">
           <h2 className="btn text-xl">Gadget Shop</h2>
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <NavLink to='/'>Home</NavLink>
+            <NavLink to="/">Home</NavLink>
           </li>
           <li>
-            <NavLink to='/products'>Products</NavLink>
+            <NavLink to="/products">Products</NavLink>
           </li>
           <li>
-            <NavLink to='/about'>About</NavLink>
+            <NavLink to="/about">About</NavLink>
           </li>
           <li>
-            <NavLink to='/contact'>Contact Us</NavLink>
+            <NavLink to="/contact">Contact Us</NavLink>
           </li>
         </ul>
       </div>
-      <div className="navbar-end">
-        <div className="flex gap-2 items-center">
-          <Link to='/login'>
-            <button className="btn btn-primary btn-outline text-white px-4 border border-black rounded-lg">Login</button>
-          </Link>
-          <Link to='register'>
-            <button className="btn btn-primary text-white px-4 border border-black rounded-lg">Register</button>
-          </Link>
+      {user ? (
+        <div className="navbar-end">
+          <UserDropdown />
         </div>
-      </div>
+      ) : (
+        <div className="navbar-end">
+          <div className="flex gap-2 items-center">
+            <Link to="/login">
+              <button className="btn btn-primary btn-outline text-white px-4 border border-black rounded-lg">
+                Login
+              </button>
+            </Link>
+            <Link to="register">
+              <button className="btn btn-primary text-white px-4 border border-black rounded-lg">
+                Register
+              </button>
+            </Link>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
