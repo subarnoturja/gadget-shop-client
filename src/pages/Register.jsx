@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { useForm } from "react-hook-form";
 
@@ -12,12 +12,15 @@ const Register = () => {
     formState: {errors},
   } = useForm()
 
+  const navigate = useNavigate()
+
   const onSubmit = (data) => {
     const { email, password } = data;
-    
+
     createUser(email, password)
     .then(result => {
       console.log(result.user);
+      navigate('/')
     })
   }
   
