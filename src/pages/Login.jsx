@@ -1,7 +1,21 @@
-import React from "react";
 import { Link } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
+import { useForm } from "react-hook-form";
 
 const Login = () => {
+
+  const { userLogin } = useAuth();
+  const {
+    register, 
+    handleSubmit, 
+    watch, 
+    formState: {errors},
+  } = useForm()
+
+  const onSubmit = (data) => {
+    console.log(data);
+  }
+
   return (
     <div className="hero bg-base-200 min-h-screen">
       <div className="hero-content flex-col lg:flex-row-reverse">
@@ -10,7 +24,7 @@ const Login = () => {
         </div>
         <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
             {/* Form Tag */}
-          <form className="card-body">
+          <form onSubmit={handleSubmit(onSubmit)} className="card-body">
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Email</span>
@@ -19,8 +33,9 @@ const Login = () => {
                 type="email"
                 placeholder="email"
                 className="input input-bordered"
-                required
+                {...register("email", { required: true })}
               />
+              {errors.email && <p className="text-red-500 text-sm font-light">Email is required</p>}
             </div>
             <div className="form-control">
               <label className="label">
@@ -30,11 +45,16 @@ const Login = () => {
                 type="password"
                 placeholder="password"
                 className="input input-bordered"
-                required
+                {...register("password", {
+                  required: true,
+                  minLength: 6,
+                })}
               />
+              {errors.password?. type === "required" && (<p className="text-red-500 text-sm font-light">Password is required</p>)}
+              {errors.password?. type === "minLength" && (<p className="text-red-500 text-sm font-light">Password must have 6 characters</p>)}
             </div>
             <div className="form-control mt-6">
-              <button className="btn btn-primary">Login</button>
+              <button type="submit" className="btn btn-primary">Login</button>
             </div>
             <p className="my-4 text-sm font-light">
                 New here?{" "} 
