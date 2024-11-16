@@ -16,12 +16,17 @@ const Register = () => {
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
-    const { email, password } = data;
+    const email = data.email;
+    const role = data.email;
+    const status = role === 'buyer' ? "approved" : "pending"
+    const wishList = []
+    const userData = {email, role, status, wishList};
+    console.log(userData);
 
-    createUser(email, password).then((result) => {
-      console.log(result.user);
-      navigate("/");
-    });
+    // createUser(data.email, data.password).then((result) => {
+    //   console.log(result.user);
+    //   navigate("/");
+    // });
   };
 
   return (
