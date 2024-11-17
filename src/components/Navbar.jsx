@@ -6,7 +6,7 @@ const Navbar = () => {
   const { user } = useAuth();
 
   return (
-    <div className="navbar bg-base-200">
+    <div className="navbar container mx-auto">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -49,7 +49,7 @@ const Navbar = () => {
           </ul>
         </div>
         <Link to="/">
-          <h2 className="btn text-xl">Gadget Shop</h2>
+          <h2 className="text-3xl font-bold">Gadget Shop</h2>
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
