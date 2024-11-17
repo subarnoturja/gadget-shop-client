@@ -9,7 +9,7 @@ const UserDropdown = () => {
   const handleLogout = () => {
     userLogout()
     .then(result => {
-        console.log(result.user);
+        console.log(result);
     })
   }
 

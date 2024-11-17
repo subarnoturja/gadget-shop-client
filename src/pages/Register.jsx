@@ -123,8 +123,8 @@ const Register = () => {
                 className="select select-bordered w-full max-w-xs"
                 {...register("role", { required: true })}
               >
-                <option value="buyer">Buyer</option>
-                <option value="seller">Seller</option>
+                <option value="buyer">buyer</option>
+                <option value="seller">seller</option>
               </select>
               {errors.role && (
                 <p className="text-red-500 text-sm font-light">

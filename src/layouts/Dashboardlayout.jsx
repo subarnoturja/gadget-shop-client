@@ -10,7 +10,7 @@ const Dashboardlayout = () => {
             <Sidebar></Sidebar>
            </div>
            {/* outlet */}
-           <div className='col-span-10'>
+           <div className='col-span-10 p-12'>
                 <Outlet></Outlet>
             </div> 
         </div>
