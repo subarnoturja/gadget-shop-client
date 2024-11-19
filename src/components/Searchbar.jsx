@@ -1,9 +1,9 @@
 import React from 'react';
 import { IoMdSearch } from 'react-icons/io';
 
-const Searchbar = () => {
+const Searchbar = ({ handleSearch }) => {
     return (
-        <form className='flex items-center'>
+        <form className='flex items-center' onSubmit={handleSearch}>
             <input type="text" 
             placeholder='Search Products'
             name='search'

@@ -10,6 +10,10 @@ const Products = () => {
 
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(false)
+  const [search, setSearch] = useState("")
+  const [sort, setSort] = useState("asc")
+  const [brand, setBrand] = useState("")
+  const [category, setCategory] = useState("")
 
   useEffect(() => {
     setLoading(true)
@@ -22,18 +26,36 @@ const Products = () => {
     fetch();
   }, [])
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setSearch(e.target.search.value)
+    e.target.search.value = "";
+  }
+
+  const handleReset = () => {
+    setSearch("")
+    setBrand("")
+    setCategory("")
+    setSort("asc")
+    window.location.reload();
+  }
+
   return (
     <div className='container mx-auto'>
       <h1 className='my-8 text-2xl font-semibold text-center'>All Products</h1>
       {/* Search and sort */}
       <div className='flex justify-between items-center w-full mb-6'>
-        <Searchbar />
-        <SortByPrice />
+        <Searchbar handleSearch={handleSearch} />
+        <SortByPrice setSort={setSort} />
       </div>
       {/* content */}
       <div className='grid grid-cols-12 gap-4'>
         <div className='col-span-2'>
-          <FilterBar />
+          <FilterBar 
+          setBrand={setBrand} 
+          setCategory={setCategory} 
+          handleReset={handleReset}
+          />
         </div>
         {/* Products */}
         <div className='col-span-10'>
