@@ -5,6 +5,7 @@ import FilterBar from '../components/products/FilterBar'
 import axios from 'axios'
 import LoadingPage from './LoadingPage'
 import ProductCard from '../components/ProductCard'
+import { FaRegArrowAltCircleLeft, FaRegArrowAltCircleRight } from 'react-icons/fa'
 
 const Products = () => {
 
@@ -14,17 +15,25 @@ const Products = () => {
   const [sort, setSort] = useState("asc")
   const [brand, setBrand] = useState("")
   const [category, setCategory] = useState("")
+  const [uniqueBrand, setUniqueBrand] = useState([])
+  const [uniqueCategory, setUniqueCategory] = useState([])
+  const [page, setPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
 
   useEffect(() => {
     setLoading(true)
     const fetch = async() => {
-      axios.get(`http://localhost:5000/all-products`).then(res => {
-        setProducts(res.data)
+      axios.get(`http://localhost:5000/all-products?title=${search}&page=${page}&limit=${9}&sort=${sort}&brand=${brand}&category=${category}`).then(res => {
+        console.log(res.data)
+        setProducts(res.data.products)
+        setUniqueBrand(res.data.brands)
+        setUniqueCategory(res.data.categories)
+        setTotalPages(Math.ceil(res.data.totalProducts / 9))
         setLoading(false)
       })
     }
     fetch();
-  }, [])
+  }, [search, sort, brand, category, page])
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -38,6 +47,13 @@ const Products = () => {
     setCategory("")
     setSort("asc")
     window.location.reload();
+  }
+
+  const handlePageChange = (newPage) => {
+    if(newPage > 0 && newPage <= totalPages){
+      setPage(newPage)
+      window.scrollTo({top:0, behavior:'smooth'} )
+    }
   }
 
   return (
@@ -55,6 +71,8 @@ const Products = () => {
           setBrand={setBrand} 
           setCategory={setCategory} 
           handleReset={handleReset}
+          uniqueBrand={uniqueBrand}
+          uniqueCategory={uniqueCategory}
           />
         </div>
         {/* Products */}
@@ -83,6 +101,16 @@ const Products = () => {
               </>
             )
           }
+          {/* Pagination */}
+        <div className='flex justify-center items-center gap-2 my-8'>
+          <button className='btn p-4 border rounded-full border-black' onClick={() => handlePageChange(page - 1)} disabled={page === 1}>
+            <FaRegArrowAltCircleLeft />
+          </button>
+          <p>Page {page} of {totalPages}</p>
+          <button className='btn p-4 border rounded-full border-black' onClick={() => handlePageChange(page + 1)} disabled={page === totalPages}>
+            <FaRegArrowAltCircleRight />
+          </button>
+        </div>
         </div>
       </div>
     </div>
