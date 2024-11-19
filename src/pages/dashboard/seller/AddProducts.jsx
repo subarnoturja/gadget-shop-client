@@ -25,10 +25,10 @@ const AddProducts = () => {
     const product = {
       title,
       brand,
+      imageURL,
       price,
       stock,
       category,
-      imageURL,
       description,
       sellerEmail,
     };
